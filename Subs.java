@@ -66,7 +66,7 @@ public class Subs extends JPanel {
 		mtnnums.add((int)(Math.random()*3) + 1);
 		mtnnums.add((int)(Math.random()*3) + 1);
 		mtnnums.add((int)(Math.random()*3) + 1);
-		difficulty = 9;
+		difficulty = 0;
 //          icexs.add(100);
 //          icexs.add(550);
 //          icexs.add(950);
@@ -276,7 +276,7 @@ public class Subs extends JPanel {
 			enemy newenemy = new standardenemy(level, newx, newy);
 			currentenemies.add(newenemy);
 		}
-		if (rand <= (.01 * count)) {
+		if (rand <= (.01 * count * difficulty / 5)) {
 			int newx = (int)(Math.random() * (screenwidth - 400)) + 400;
 			int newy = (int)(Math.random() * (screenheight - 50)) + 50;
 			enemy newspike = new spikeballenemy(1, newx, newy);
