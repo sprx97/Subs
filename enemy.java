@@ -1,7 +1,6 @@
 import java.util.*;
 import java.awt.*;
-public interface enemy
-{
+public interface enemy {
 	public int getX();
 	public int getY();
 	public int getSize();
@@ -24,7 +23,7 @@ public interface enemy
 // public class enemy
 // {
 // 	int level; // level of enemy it is (higher is stronger)
-// 	ImageIcon ii; 
+// 	ImageIcon ii;
 // 	Image img; // different images for each enemy
 // 	int xpos; // current x position
 // 	int ypos; // current y position
@@ -110,14 +109,14 @@ public interface enemy
 // 		}
 // 		else reloadtime++;
 // 	}
-// 	
+//
 // 	public ArrayList<missile> getMissiles()
 // 	{
 // 		return missiles;
 // 	}
-// 	
+//
 // 	public int getSize()
 // 	{
 // 		return size;
 // 	}
-// }	
+// }
