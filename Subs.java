@@ -17,8 +17,10 @@ public class Subs extends JPanel {
 	public Timer t = new Timer(30, new Listener());
 	public Timer time = new Timer(1000, new TimeListener());
 	final static int screenwidth = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()), screenheight = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-	final int LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3, SPACE = 4, B = 5, F = 6, R = 7, V = 8;
+	final static int LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3, SPACE = 4, B = 5, F = 6, R = 7, V = 8;
 	boolean[] keys = new boolean[9];
+	final static int RUNNING = 1, MENU=2;
+	int gamestate=RUNNING;
 	public int screenystart = 500;
 	public int subxpos = 50;
 	public int subypos = 350;
@@ -51,7 +53,6 @@ public class Subs extends JPanel {
 //       ArrayList<Integer> icesizes = new ArrayList<Integer>();
 //       ArrayList<Integer> icenums = new ArrayList<Integer>();
 	public Subs() {
-		JOptionPane.showMessageDialog(null, "Welcome to SUBS! By Jeremy Vercillo \n\n Move with the Arrow Keys. \n Fire with V (diagonally downward shot), F (forward shot), and R (diagonally upward shot) \n Kill as many enemies as you can before you die!");
 		initMusic();
 		myImage = new BufferedImage(screenwidth, screenheight, BufferedImage.TYPE_INT_RGB);
 		buffer = (Graphics2D)myImage.getGraphics();
@@ -67,6 +68,7 @@ public class Subs extends JPanel {
 		mtnnums.add((int)(Math.random()*3) + 1);
 		mtnnums.add((int)(Math.random()*3) + 1);
 		difficulty = 0;
+		gamestate=MENU;
 //          icexs.add(100);
 //          icexs.add(550);
 //          icexs.add(950);
@@ -78,6 +80,13 @@ public class Subs extends JPanel {
 //          icenums.add((int)(Math.random()*2)+1);
 		t.start();
 		time.start();
+	}
+	public void newGame(int d) {
+		difficulty=d;
+		subxpos = 50;
+		subypos = 350;
+		gamestate=RUNNING;
+
 	}
 	public void move() {
 		if (keys[UP]) {
@@ -115,8 +124,15 @@ public class Subs extends JPanel {
 		reloadtime++;
 		if (subxpos < 0) subxpos = 0;
 		if (subypos < 38) subypos = 38;
-		if (subxpos > screenwidth - 125) subxpos = screenwidth - 125;
-		if (subypos > screenheight - 38) subypos = screenheight - 38;
+		if (subxpos > screenwidth - 125) {
+			if (gamestate==MENU){
+				newGame((int)(9.0*subypos/screenheight+1));
+			}
+			subxpos = screenwidth - 125;
+		}
+		if (subypos > screenheight - 38) {
+			subypos = screenheight - 38;
+		}
 	}
 	public void movemissile() {
 		ListIterator it = currentmissiles.listIterator();
@@ -265,6 +281,26 @@ public class Subs extends JPanel {
 		buffer.drawString("Life: " + hitpoints + "/25", 400, 75);
 		buffer.drawString("Kills: " + killcount, 700, 75);
 		buffer.drawString("Score: " + points, 1000, 75);
+		repaint();
+	}
+	public void drawMenu() {
+		buffer.setColor(Color.red);
+		buffer.setFont(new Font("Default", 0, 64));
+		buffer.drawString("Subs", 550, 100);
+		buffer.setColor(Color.black);
+		buffer.setFont(new Font("Default", 0, 32));
+		buffer.drawString("Welcome to SUBS! By Jeremy Vercillo", 50, 160);
+		buffer.drawString("Move with the Arrow Keys.", 50, 190);
+		buffer.drawString("Fire with:", 50, 250);
+		buffer.drawString("V (diagonally downward shot)", 300, 250);
+		buffer.drawString("F (forward shot)", 300, 280);
+		buffer.drawString("R (diagonally upward shot)", 300, 310);
+		buffer.drawString("Kill as many enemies as you can before you die!", 50, 340);
+		//Level Select:
+		buffer.setColor(Color.yellow);
+		for (int i =1; i<=9; i++) {
+			buffer.drawString(""+i, screenwidth-50, screenheight/9*i-15);
+		}
 		repaint();
 	}
 	public void moveenemies() {
@@ -449,7 +485,16 @@ for (enemy e : currentenemies) {
 				playMusic(gamemusic);
 				music = true;
 			}
-			if (hitpoints <= 0) {
+			if (gamestate==MENU){
+				move();
+				drawBG();
+				moveleftovers();
+				movemissile();
+				moveenemies();
+				explosions();
+				drawMenu();
+			}
+			else if (hitpoints <= 0) {
 				hitpoints = 0;
 				drawBG();
 				buffer.setColor(Color.red);
