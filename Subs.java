@@ -128,7 +128,9 @@ public class Subs extends JPanel {
 			if (gamestate==MENU){
 				newGame((int)(9.0*subypos/screenheight+1));
 			}
-			subxpos = screenwidth - 125;
+			else{
+				subxpos = screenwidth - 125;
+			}
 		}
 		if (subypos > screenheight - 38) {
 			subypos = screenheight - 38;
