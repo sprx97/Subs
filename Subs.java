@@ -298,6 +298,9 @@ public class Subs extends JPanel {
 		buffer.drawString("F (forward shot)", 300, 280);
 		buffer.drawString("R (diagonally upward shot)", 300, 310);
 		buffer.drawString("Kill as many enemies as you can before you die!", 50, 340);
+		buffer.drawString("Move over to the numbers when you are ready to start", 50, 400);
+		buffer.drawString("The number you pick selects the difficulty level", 50, 430);
+		buffer.drawString("Good Luck!", 50, 460);
 		//Level Select:
 		buffer.setColor(Color.yellow);
 		for (int i =1; i<=9; i++) {
