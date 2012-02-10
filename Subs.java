@@ -1,3 +1,5 @@
+// This is a comment
+
 // Play this game!!!
 import javax.swing.*;
 import java.awt.*;
@@ -289,7 +291,7 @@ public class Subs extends JPanel {
 		buffer.setColor(Color.red);
 		buffer.setFont(new Font("Default", 0, 64));
 		buffer.drawString("Subs", 550, 100);
-		buffer.setColor(Color.black);
+		buffer.setColor(Color.white);
 		buffer.setFont(new Font("Default", 0, 32));
 		buffer.drawString("Welcome to SUBS! By Jeremy Vercillo", 50, 160);
 		buffer.drawString("Move with the Arrow Keys.", 50, 190);
